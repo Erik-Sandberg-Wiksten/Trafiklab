@@ -27,7 +27,7 @@ mvn spring-boot:run
 
 Then the application is up and running on localhost:8080/
 
-## Available endpoints
+### Available endpoints
 * /hello
 
 ## Contributing
