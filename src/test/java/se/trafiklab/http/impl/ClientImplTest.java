@@ -1,31 +1,22 @@
-package se.trafiklab;
+package se.trafiklab.http.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.junit.jupiter.api.Test;
 import se.trafiklab.http.Client;
-import se.trafiklab.http.impl.ClientImpl;
 import se.trafiklab.model.BaseModel;
 import se.trafiklab.model.JourneyPatternPointOnLineModel;
 
 import java.io.IOException;
 
-@SpringBootApplication
-@RestController
-public class TrafiklabApplication {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        SpringApplication.run(TrafiklabApplication.class, args);
-    }
+class ClientImplTest {
 
-    @GetMapping("/hello")
-    public BaseModel sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) throws IOException {
+    @Test
+    public void test() throws IOException {
         OkHttpClient client = new OkHttpClient();
         Client clientImpl = new ClientImpl(client);
 
@@ -38,9 +29,9 @@ public class TrafiklabApplication {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
+        BaseModel<JourneyPatternPointOnLineModel> responseModel = mapper.readValue(bodyJson, new TypeReference<BaseModel<JourneyPatternPointOnLineModel>>() {});
 
-        return mapper.readValue(bodyJson, new TypeReference<BaseModel<JourneyPatternPointOnLineModel>>() {
-        });
-
+        System.out.println(responseModel.getExecutionTime());
     }
+
 }
