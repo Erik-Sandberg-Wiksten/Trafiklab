@@ -2,7 +2,7 @@ package se.trafiklab.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class BaseModel<T> {
+public class Model<T> {
     @JsonProperty("StatusCode")
     private int statusCode;
     @JsonProperty("ExecutionTime")
