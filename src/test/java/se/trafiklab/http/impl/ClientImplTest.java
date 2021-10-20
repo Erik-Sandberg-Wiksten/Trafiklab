@@ -6,12 +6,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.junit.jupiter.api.Test;
 import se.trafiklab.http.Client;
-import se.trafiklab.model.BaseModel;
+import se.trafiklab.model.Model;
 import se.trafiklab.model.JourneyPatternPointOnLineModel;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ClientImplTest {
 
@@ -29,7 +27,7 @@ class ClientImplTest {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
-        BaseModel<JourneyPatternPointOnLineModel> responseModel = mapper.readValue(bodyJson, new TypeReference<BaseModel<JourneyPatternPointOnLineModel>>() {});
+        Model<JourneyPatternPointOnLineModel> responseModel = mapper.readValue(bodyJson, new TypeReference<>() {});
 
         System.out.println(responseModel.getExecutionTime());
     }
