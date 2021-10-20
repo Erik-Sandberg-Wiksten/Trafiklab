@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import se.trafiklab.http.Client;
 import se.trafiklab.http.impl.ClientImpl;
-import se.trafiklab.model.BaseModel;
+import se.trafiklab.model.Model;
 import se.trafiklab.model.JourneyPatternPointOnLineModel;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class TrafiklabApplication {
     }
 
     @GetMapping("/hello")
-    public BaseModel sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) throws IOException {
+    public Model sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Client clientImpl = new ClientImpl(client);
 
@@ -39,7 +39,7 @@ public class TrafiklabApplication {
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
 
-        return mapper.readValue(bodyJson, new TypeReference<BaseModel<JourneyPatternPointOnLineModel>>() {
+        return mapper.readValue(bodyJson, new TypeReference<Model<JourneyPatternPointOnLineModel>>() {
         });
 
     }
