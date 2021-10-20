@@ -28,8 +28,8 @@ mvn spring-boot:run
 Then the application is up and running on localhost:8080/
 
 ### Available endpoints
-* /hello
 * /busline
+* /busline/{lineNumber}
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
