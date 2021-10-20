@@ -7,6 +7,8 @@ import se.trafiklab.model.Model;
 import se.trafiklab.model.JourneyPatternPointOnLineModel;
 import se.trafiklab.model.factory.ModelFactory;
 
+import java.util.Optional;
+
 public class ModelFactoryImpl implements ModelFactory {
     private ObjectMapper mapper;
 
@@ -16,7 +18,11 @@ public class ModelFactoryImpl implements ModelFactory {
     }
 
     @Override
-    public Model<JourneyPatternPointOnLineModel> createJourneyPatternPointOnLineModel(String json) throws JsonProcessingException {
-        return mapper.readValue(json, new TypeReference<>() {});
+    public Optional<Model<JourneyPatternPointOnLineModel>> createJourneyPatternPointOnLineModel(String json) {
+        try {
+            return mapper.readValue(json, new TypeReference<>() {});
+        } catch (JsonProcessingException e) {
+            return Optional.empty();
+        }
     }
 }

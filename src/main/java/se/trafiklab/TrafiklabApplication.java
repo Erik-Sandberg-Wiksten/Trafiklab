@@ -6,9 +6,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import se.trafiklab.bus.BusController;
 import se.trafiklab.http.Client;
 import se.trafiklab.http.impl.ClientImpl;
 import se.trafiklab.model.Model;
@@ -25,7 +27,7 @@ public class TrafiklabApplication {
     }
 
     @GetMapping("/hello")
-    public Model sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) throws IOException {
+    public Model<JourneyPatternPointOnLineModel> sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Client clientImpl = new ClientImpl(client);
 
@@ -39,7 +41,7 @@ public class TrafiklabApplication {
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
 
-        return mapper.readValue(bodyJson, new TypeReference<Model<JourneyPatternPointOnLineModel>>() {
+        return mapper.readValue(bodyJson, new TypeReference<>() {
         });
 
     }

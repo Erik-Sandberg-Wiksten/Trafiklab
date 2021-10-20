@@ -20,17 +20,29 @@ public class BusServiceImpl implements BusService{
 
     private RequestFactory requestFactory;
 
-    public List<BusLineInfo> getTopTenBusLines() throws IOException {
-        RequestFactory requestFactory = new RequestFactoryImpl("db416c90002e4ae5b0b22675c8590977");
+    public BusServiceImpl(RequestFactory requestFactory) {
+        this.requestFactory = requestFactory;
+    }
+
+    public List<BusLineInfo> getTopTenBusLines() {
         Request request = requestFactory.createJourneyPatternPointOnLine();
         OkHttpClient okHttpClient = new OkHttpClient();
         Client client = new ClientImpl(okHttpClient);
-        String json = client.makeCall(request);
+        String json;
+        try {
+            json = client.makeCall(request);
+        } catch (IOException e) {
+            return Collections.emptyList();
+        }
         ObjectMapper mapper = new ObjectMapper();
         ModelFactory modelFactory = new ModelFactoryImpl(mapper);
-        Model<JourneyPatternPointOnLineModel> journeyPatternPointOnLineModel = modelFactory.createJourneyPatternPointOnLineModel(json);
+        Optional<Model<JourneyPatternPointOnLineModel>> journeyPatternPointOnLineModel = modelFactory.createJourneyPatternPointOnLineModel(json);
 
-        Map<Integer, Set<Integer>> map = journeyPatternPointOnLineModel.getResponseData().getResult().stream()
+        if(journeyPatternPointOnLineModel.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Map<Integer, Set<Integer>> map = journeyPatternPointOnLineModel.get().getResponseData().getResult().stream()
                 .collect(Collectors.groupingBy(
                         JourneyPatternPointOnLineModel::getLineNumber,
                         Collectors.mapping(

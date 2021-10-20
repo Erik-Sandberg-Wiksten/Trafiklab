@@ -1,5 +1,7 @@
 package se.trafiklab.bus;
 
-public interface BusService {
+import java.util.List;
 
+public interface BusService {
+    List<BusLineInfo> getTopTenBusLines();
 }
