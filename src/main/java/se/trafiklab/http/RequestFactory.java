@@ -4,4 +4,5 @@ import okhttp3.Request;
 
 public interface RequestFactory {
     Request createJourneyPatternPointOnLine();
+    Request createStopPoint();
 }

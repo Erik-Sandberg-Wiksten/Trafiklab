@@ -25,4 +25,15 @@ public class RequestFactoryImpl implements RequestFactory {
                 .addHeader("Accept-Encoding", "gzip, deflate")
                 .build();
     }
+
+    @Override
+    public Request createStopPoint() {
+        return  new Request.Builder()
+                .url(BASE_URL +
+                        "?model=" + DataModelType.STOP_POINT.getName() +
+                        "&DefaultTransportModeCode=" + DefaultTransportMode.BUS.getCode() +
+                        "&key=" + apiKey)
+                .addHeader("Accept-Encoding", "gzip, deflate")
+                .build();
+    }
 }
